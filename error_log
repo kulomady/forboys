@@ -1,0 +1,19 @@
+[04-Aug-2014 08:20:47 Asia/Jakarta] PHP Fatal error:  Uncaught exception 'Exception' with message 'MySQL operation failed
+View '(null).(null)' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them' in /home/jasprico/public_html/sis/application/libraries/connector/db_common.php:798
+Stack trace:
+#0 /home/jasprico/public_html/sis/application/libraries/connector/db_common.php(558): MySQLDBDataWrapper->query('SELECT  a.id,a....')
+#1 /home/jasprico/public_html/sis/application/libraries/connector/base_connector.php(341): DBDataWrapper->select(Object(DataRequestConfig))
+#2 /home/jasprico/public_html/sis/application/libraries/connector/base_connector.php(313): Connector->render()
+#3 /home/jasprico/public_html/sis/application/controllers/pesanan_pembelian.php(34): Connector->render_sql('select a.id,a.k...', 'kdtrans', 'id,kdtrans,nm_o...')
+#4 [internal function]: pesanan_pembelian->loadMainData('2014-08-04', '2014-08-04', '0', '0', '0')
+#5 /home/jasprico/public_html/sis/system/core/CodeIgniter.php(359): call_user_func_a in /home/jasprico/public_html/sis/application/libraries/connector/db_common.php on line 798
+[05-Aug-2014 17:04:25 Asia/Jakarta] PHP Fatal error:  Uncaught exception 'Exception' with message 'MySQL operation failed
+View '(null).(null)' references invalid table(s) or column(s) or function(s) or definer/invoker of view lack rights to use them' in /home/jasprico/public_html/sis/application/libraries/connector/db_common.php:798
+Stack trace:
+#0 /home/jasprico/public_html/sis/application/libraries/connector/db_common.php(558): MySQLDBDataWrapper->query('SELECT  a.id,a....')
+#1 /home/jasprico/public_html/sis/application/libraries/connector/base_connector.php(341): DBDataWrapper->select(Object(DataRequestConfig))
+#2 /home/jasprico/public_html/sis/application/libraries/connector/base_connector.php(313): Connector->render()
+#3 /home/jasprico/public_html/sis/application/controllers/saldo_awal.php(425): Connector->render_sql('select a.id,a.i...', 'id', 'idperkiraan,nmp...')
+#4 [internal function]: saldo_awal->loadData_akun_aktiva()
+#5 /home/jasprico/public_html/sis/system/core/CodeIgniter.php(359): call_user_func_array(Array, Array)
+#6 /home/jasprico/public_html/si in /home/jasprico/public_html/sis/application/libraries/connector/db_common.php on line 798

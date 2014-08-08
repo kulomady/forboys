@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<toolbar>
+	<item id="new" type="button" img="new.gif" imgdis="new_dis.gif" text="Tambah" enabled="false" />
+	<item id="edit" type="button"  img="open.gif" imgdis="open_dis.gif" text="Ubah" enabled="false" />
+	<item id="del" type="button"  img="delete.png" imgdis="dis_delete.png" text="Hapus" enabled="false" />	
+	<item id="print" type="button"  img="print.gif" imgdis="print_dis.gif" text="Cetak" enabled="false" />
+	<item id="cari" type="button"  img="filter.png" imgdis="filter.png" text="Cari" enabled="false" />
+	<item id="refresh" type="button"  img="refresh.png" imgdis="refresh_dis.png" text="Muat Ulang" enabled="false" />
+</toolbar>

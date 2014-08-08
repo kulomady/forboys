@@ -1,0 +1,155 @@
+<div id="tmpTb_md31" style="background-color:#B8E0F5; padding:3px; padding-bottom:0px;"></div>
+<div id="tmpLayout_md31" style="position: relative; width: 100%; height: 100%; border: #B5CDE4 1px solid;"></div>
+<div id="tmpSearch_md31" style="font-family:Arial, Helvetica, sans-serif; font-size: 12px; display:none;">
+  <form id="frmSearch_md31" name="frmSearch_md31" method="post" action="javascript:void(0);">
+    <table width="956" border="0">
+      <tr>
+        <td width="50">Kode</td>
+        <td width="200"><input type="text" name="kode" id="kode" /></td>
+        <td width="50">Nama</td>
+        <td width="200"><input type="text" name="nama" id="nama" /></td>
+        <td><input type="button" name="button" id="button" value="CARI" onclick="loadGd_md31();" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<script language="javascript">
+tb_md31 = new dhtmlXToolbarObject("tmpTb_md31");
+tb_md31.setIconsPath(base_url+"assets/codebase_toolbar/icon/");
+tb_md31.setSkin("dhx_terrace");
+tb_md31.attachEvent("onclick", tbClick_md31);
+tb_md31.loadXML(base_url+"assets/codebase_toolbar/dhxtoolbar.xml?etc=" + new Date().getTime(),function() {
+	tb_md31.hideItem('print');
+	<?php echo $hak_toolbar; ?>
+});
+
+dhxLayout_md31 = new dhtmlXLayoutObject("tmpLayout_md31", "2E");
+dhxLayout_md31.cells("a").setText("Cari Data");
+dhxLayout_md31.setCollapsedText("a","<strong>Cari Data</strong>");
+dhxLayout_md31.cells("a").setHeight(60);
+dhxLayout_md31.cells("a").collapse();
+dhxLayout_md31.cells("a").attachObject("tmpSearch_md31");
+dhxLayout_md31.cells("b").setText("Site Navigation");
+dhxLayout_md31.cells("b").hideHeader();
+
+function tbClick_md31(id) {
+	if(id=='new') {
+		winForm_md31('input');
+	} else if(id=='edit') {
+		winForm_md31('edit');
+	} else if(id=='del') {
+		hapus_md31();
+	} else if(id=='refresh') {
+		loadGd_md31();
+	} else if(id=='print') {
+		cetak_md31();
+	} else if(id=='cari') {
+		if(dhxLayout_md31.cells("a").isCollapsed()) {
+			dhxLayout_md31.cells("a").expand();
+		} else {
+			dhxLayout_md31.cells("a").collapse();
+		}
+	}
+}
+
+gd_md31 = dhxLayout_md31.cells("b").attachGrid();
+gd_md31.setImagePath("<?php echo base_url(); ?>assets/codebase_grid/imgs/");
+gd_md31.setHeader("&nbsp;,Kode,Nama Size Run,Tgl Buat,Tgl Modifikasi,Dibuat Oleh,Dimodifikasi Oleh",null,
+["text-align:center","text-align:center","text-align:center","text-align:center","text-align:center","text-align:center","text-align:center"]);
+gd_md31.setInitWidths("30,80,150,120,120,100,100");
+gd_md31.setColAlign("right,left,left,left,left,left,left");
+gd_md31.setColSorting("na,str,str,str,str,str,str");
+gd_md31.setColTypes("cntr,ro,ro,ro,ro,ro,ro");
+//gd_md31.enableSmartRendering(true,50);
+gd_md31.setColumnColor("#CCE2FE");
+gd_md31.setSkin("dhx_skyblue");
+gd_md31.splitAt(1);
+gd_md31.init();
+loadGd_md31();
+
+function loadGd_md31() {
+	if(document.frmSearch_md31.kode.value=="") {
+		kode = "0";
+	} else {
+		kode = document.frmSearch_md31.kode.value;
+	}
+	
+	if(document.frmSearch_md31.nama.value=="") {
+		nama = "0";
+	} else {
+		nama = document.frmSearch_md31.nama.value;
+	}
+	
+	statusLoading();
+	gd_md31.clearAll();
+	gd_md31.loadXML(base_url+"index.php/ref_sizerun/loadMainData/"+kode+"/"+nama,function(){
+		statusEnding();
+	});
+}
+
+function refreshGd_md31() {
+	gd_md31.updateFromXML(base_url+"index.php/ref_sizerun/loadMainData");
+}
+
+function winForm_md31(type) {
+	idselect = gd_md31.getRowIndex(gd_md31.getSelectedId());
+	if(type=='edit' && idselect == "-1") {
+		alert("Tidak ada data yang dipilih");
+		return;
+	}
+	w1_md31 = dhxWins.createWindow("w1_md31",0,0,450,300);
+	w1_md31.setText("Tambah Data Tipe Barang");
+	w1_md31.button("park").hide();
+	w1_md31.button("minmax1").hide();
+	w1_md31.center();
+	w1_md31.setModal(true);
+	if(type=='input') {
+		w1_md31.attachURL(base_url+"index.php/ref_sizerun/frm_input", true);
+	} else {
+		w1_md31.attachURL(base_url+"index.php/ref_sizerun/frm_edit/"+gd_md31.getSelectedId(), true);
+	}
+	
+	tb_w1_md31 = w1_md31.attachToolbar();
+	tb_w1_md31.setIconsPath(base_url+"assets/codebase_toolbar/icon/");
+	tb_w1_md31.setSkin("dhx_terrace");
+	tb_w1_md31.addButton("baru", 1, "BARU", "new.gif", "new_dis.gif");
+	tb_w1_md31.addButton("save", 2, "SIMPAN", "save.gif", "save_dis.gif");
+	tb_w1_md31.addButton("batal", 3, "BATAL", "delete.png", "dis_delete.png");
+	tb_w1_md31.disableItem("baru");
+	tb_w1_md31.attachEvent("onclick", function(id) {
+		if(id=='batal') {
+			document.frm_md31.reset();
+		} else if(id=='save') {
+			simpan_md31();
+		} else if(id=='baru') {
+			tb_w1_md31.disableItem("baru");
+			tb_w1_md31.enableItem("save");
+			tb_w1_md31.enableItem("batal");
+			baru_md31();
+		}
+	});
+
+}
+
+function hapus_md31() {
+	idselect = gd_md31.getRowIndex(gd_md31.getSelectedId());
+	if(idselect == "-1") {
+		alert("Tidak ada data yang dipilih");
+		return;
+	}
+	var ya = prompt("Ketik 'ya' Jika anda yakin !","");
+	if(ya=='ya') {
+		 poststr =
+            	'idrec=' + gd_md31.getSelectedId();
+			statusLoading();   
+        	dhtmlxAjax.post("<?php echo base_url(); ?>index.php/ref_sizerun/hapus", encodeURI(poststr), function(loader) {
+				result = loader.xmlDoc.responseText;
+				statusEnding();
+				gd_md31.deleteSelectedItem();
+				//loadGd_md31();
+			});
+		}
+}
+
+</script>
